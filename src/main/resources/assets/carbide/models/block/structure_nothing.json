@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "carbide:blocks/structure_nothing"
+  }
+}

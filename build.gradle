@@ -4,16 +4,17 @@ buildscript {
         maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath "net.minecraftforge.gradle:ForgeGradle:${fg_version}"
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "${mod_version}.${build_number}"
-group = "ru.pearx.libmc"
-archivesBaseName = "PearXLibMC-${mc_version}"
+version = "${mod_version}+${build_number}"
+group = "ru.pearx.carbide.mc"
+archivesBaseName = "Carbide-${mc_version}"
 
 sourceCompatibility = targetCompatibility = '1.8'
+
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
@@ -25,23 +26,19 @@ minecraft {
 
     replace("@VERSION@", version)
     replace("@MCVERSION@", mc_version)
-    replace("acceptedMinecraftVersions = \"\"", "acceptedMinecraftVersions = \"" + accepted_mc_versions + "\"")
-    replaceIn("PXLMC.java")
+    replace("acceptedMinecraftVersions = \"\"", "acceptedMinecraftVersions = \"${accepted_mc_versions}\"")
+    replaceIn("CarbideMC.java")
 }
 
 dependencies {
-    compile project("PearXLib2")
+    compile project("CarbideLib")
 }
 
-processResources {
-    rename '(.+_at.cfg)', 'META-INF/$1'
-}
-
-evaluationDependsOn(project("PearXLib2").path)
-jar.dependsOn project("PearXLib2").tasks["classes"]
+evaluationDependsOn(project("CarbideLib").path)
+jar.dependsOn project("CarbideLib").tasks["classes"]
 jar {
     manifest {
-        attributes 'FMLAT': 'pxlmc_at.cfg'
+        attributes 'FMLAT': 'carbide.cfg'
     }
-    from project.project("PearXLib2").sourceSets.main.output
+    from project.project("CarbideLib").sourceSets.main.output
 }
