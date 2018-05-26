@@ -22,7 +22,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.apache.logging.log4j.Logger;
-import ru.pearx.carbide.ResourceContainer;
 import ru.pearx.carbide.mc.common.CommonProxy;
 import ru.pearx.carbide.mc.common.PXLCapabilities;
 import ru.pearx.carbide.mc.common.networking.packets.CPacketOpenStructureCreationGui;

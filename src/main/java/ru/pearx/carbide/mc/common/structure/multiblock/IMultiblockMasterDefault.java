@@ -3,7 +3,6 @@ package ru.pearx.carbide.mc.common.structure.multiblock;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import ru.pearx.carbide.mc.common.structure.multiblock.events.*;
 import ru.pearx.carbide.mc.common.items.PXLItems;
 import ru.pearx.carbide.mc.common.structure.multiblock.events.*;
 

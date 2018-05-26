@@ -22,7 +22,6 @@ import ru.pearx.carbide.mc.CarbideMC;
 import ru.pearx.carbide.mc.common.structure.processors.IStructureProcessor;
 import ru.pearx.carbide.mc.common.structure.processors.StructureProcessor;
 import ru.pearx.carbide.mc.common.structure.processors.StructureProcessorData;
-import ru.pearx.carbide.ResourceUtils;
 import ru.pearx.carbide.mc.common.blocks.PXLBlocks;
 
 import javax.annotation.Nullable;

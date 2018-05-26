@@ -22,7 +22,7 @@ compileJava {
 minecraft {
     version = "${mc_version}-${forge_version}"
     runDir = "run"
-    mappings = "${mappings_version}"
+    mappings = mappings_version
 
     replace("@VERSION@", version)
     replace("@MCVERSION@", mc_version)
@@ -35,10 +35,10 @@ dependencies {
 }
 
 evaluationDependsOn(project("CarbideLib").path)
-jar.dependsOn project("CarbideLib").tasks["classes"]
+jar.dependsOn(project("CarbideLib").tasks["classes"])
 jar {
     manifest {
-        attributes 'FMLAT': 'carbide.cfg'
+        attributes 'FMLAT': 'carbide_at.cfg'
     }
     from project.project("CarbideLib").sourceSets.main.output
 }
