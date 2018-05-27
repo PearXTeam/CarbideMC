@@ -18,6 +18,7 @@ import ru.pearx.carbide.mc.client.gui.controls.common.Button;
 import ru.pearx.carbide.mc.client.gui.controls.common.ContextMenu;
 import ru.pearx.carbide.mc.client.gui.controls.common.LegacyListView;
 import ru.pearx.carbide.mc.client.gui.controls.common.TextBox;
+import ru.pearx.carbide.mc.common.misc.CoordUtils;
 import ru.pearx.carbide.mc.common.networking.packets.SPacketCreateStructure;
 import ru.pearx.carbide.mc.common.structure.processors.IStructureProcessor;
 import ru.pearx.carbide.mc.common.structure.processors.StructureProcessor;
@@ -52,8 +53,8 @@ public class GuiStructureCreation extends GuiOnScreen
     public TextBox name = new TextBox(new ResourceLocation(CarbideMC.MODID, "textures/gui/textbox.png"));
     public Button create = new Button(new ResourceLocation(CarbideMC.MODID, "textures/gui/button.png"), I18n.format("misc.gui.structure.create"), () ->
     {
-        BlockPos from = CarbideMC.parseCoords(fromPos.getBuffer().toString());
-        BlockPos to = CarbideMC.parseCoords(toPos.getBuffer().toString());
+        BlockPos from = CoordUtils.parseCoords(fromPos.getBuffer().toString());
+        BlockPos to = CoordUtils.parseCoords(toPos.getBuffer().toString());
         if(from != null && to != null && name.getBuffer().length() > 0)
         {
             CarbideMC.NETWORK.sendToServer(new SPacketCreateStructure(name.getBuffer().toString(), from, to, cntrls.stream().map(ControlStructureProcessor::getData).collect(Collectors.toList())));

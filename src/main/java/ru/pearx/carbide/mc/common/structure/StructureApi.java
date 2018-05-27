@@ -19,6 +19,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.Constants;
 import org.apache.commons.lang3.tuple.Pair;
 import ru.pearx.carbide.mc.CarbideMC;
+import ru.pearx.carbide.mc.common.misc.CoordUtils;
 import ru.pearx.carbide.mc.common.structure.processors.IStructureProcessor;
 import ru.pearx.carbide.mc.common.structure.processors.StructureProcessor;
 import ru.pearx.carbide.mc.common.structure.processors.StructureProcessorData;
@@ -186,7 +187,7 @@ public enum StructureApi
             {
                 NBTTagCompound block = (NBTTagCompound) base;
                 relPos.setPos(block.getInteger("x"), block.getInteger("y"), block.getInteger("z"));
-                relPos = CarbideMC.transformPos(relPos, mir, rot);
+                relPos = CoordUtils.transformPos(relPos, mir, rot);
                 absPos.setPos(at.getX() + relPos.getX(), at.getY() + relPos.getY(), at.getZ() + relPos.getZ());
 
 
@@ -212,14 +213,14 @@ public enum StructureApi
                 entity.setInteger("Dimension", w.provider.getDimension());
                 NBTTagList pos = entity.getTagList("Pos", Constants.NBT.TAG_DOUBLE);
                 relVec.set(pos.getDoubleAt(0), pos.getDoubleAt(1), pos.getDoubleAt(2));
-                relVec = CarbideMC.transformVec(relVec, mir, rot);
+                relVec = CoordUtils.transformVec(relVec, mir, rot);
                 pos.set(0, new NBTTagDouble(relVec.getX() + at.getX()));
                 pos.set(1, new NBTTagDouble(relVec.getY() + at.getY()));
                 pos.set(2, new NBTTagDouble(relVec.getZ() + at.getZ()));
                 if(entity.hasKey("TileX", Constants.NBT.TAG_INT) && entity.hasKey("TileY", Constants.NBT.TAG_INT) && entity.hasKey("TileZ", Constants.NBT.TAG_INT))
                 {
                     relTile.setPos(entity.getInteger("TileX"), entity.getInteger("TileY"), entity.getInteger("TileZ"));
-                    relTile = CarbideMC.transformPos(relTile, mir, rot);
+                    relTile = CoordUtils.transformPos(relTile, mir, rot);
                     entity.setInteger("TileX", relTile.getX() + at.getX());
                     entity.setInteger("TileY", relTile.getY() + at.getY());
                     entity.setInteger("TileZ", relTile.getZ() + at.getZ());
@@ -262,7 +263,7 @@ public enum StructureApi
                 IStructureProcessor processor = StructureProcessor.REGISTRY.getValue(new ResourceLocation(proc.getString("processor")));
 
                 relPos.setPos(proc.getInteger("x"), proc.getInteger("y"), proc.getInteger("z"));
-                relPos = CarbideMC.transformPos(relPos, mir, rot);
+                relPos = CoordUtils.transformPos(relPos, mir, rot);
                 absPos.setPos(relPos.getX() + at.getX(), relPos.getY() + at.getY(), relPos.getZ() + at.getZ());
                 StructureProcessorData dat = processor.loadData(proc, absPos);
                 processor.process(dat, w, rand);

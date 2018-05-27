@@ -17,6 +17,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;
 import ru.pearx.carbide.mc.CarbideMC;
 import ru.pearx.carbide.mc.common.blocks.BlockMultiblockPart;
+import ru.pearx.carbide.mc.common.misc.CoordUtils;
 import ru.pearx.carbide.mc.common.structure.blockarray.BlockArray;
 
 import javax.annotation.Nullable;
@@ -103,7 +104,7 @@ public class Multiblock extends IForgeRegistryEntry.Impl<Multiblock>
     public void form(World w, BlockPos zeroPos, Rotation rot, @Nullable EntityPlayer pl)
     {
         BlockPos.MutableBlockPos absMasterPos = new BlockPos.MutableBlockPos(getMasterPos());
-        absMasterPos = CarbideMC.transformPos(absMasterPos, null, rot);
+        absMasterPos = CoordUtils.transformPos(absMasterPos, null, rot);
         absMasterPos.setPos(absMasterPos.getX() + zeroPos.getX(), absMasterPos.getY() + zeroPos.getY(), absMasterPos.getZ() + zeroPos.getZ());
 
         BlockPos.MutableBlockPos absPos = new BlockPos.MutableBlockPos();
@@ -112,7 +113,7 @@ public class Multiblock extends IForgeRegistryEntry.Impl<Multiblock>
         for (BlockPos p : getStructure().getMap().keySet())
         {
             relPos.setPos(p.getX(), p.getY(), p.getZ());
-            relPos = CarbideMC.transformPos(relPos, null, rot);
+            relPos = CoordUtils.transformPos(relPos, null, rot);
             absPos.setPos(relPos.getX() + zeroPos.getX(), relPos.getY() + zeroPos.getY(), relPos.getZ() + zeroPos.getZ());
             if (!p.equals(getMasterPos()))
             {

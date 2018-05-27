@@ -5,7 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
-import ru.pearx.carbide.mc.CarbideMC;
+import ru.pearx.carbide.mc.common.misc.CoordUtils;
 import ru.pearx.carbide.mc.common.structure.multiblock.events.MultiblockBreakEvent;
 import ru.pearx.carbide.mc.common.structure.blockarray.BlockArrayEntry;
 
@@ -95,11 +95,11 @@ public interface IMultiblockMaster extends IMultiblockPart
         BlockPos.MutableBlockPos origin = new BlockPos.MutableBlockPos();
         List<BlockPos> lst = new ArrayList<>(getSlavesPositions());
         lst.add(getPos());
-        Rotation rot = CarbideMC.getIdentityRotation(getRotation());
+        Rotation rot = CoordUtils.getReverseRotation(getRotation());
         for(BlockPos pos : lst)
         {
             origin.setPos(pos.getX() - getPos().getX(), pos.getY() - getPos().getY(), pos.getZ() - getPos().getZ());
-            CarbideMC.transformPos(origin, null, rot);
+            CoordUtils.transformPos(origin, null, rot);
             origin.setPos(origin.getX() + getMultiblock().getMasterPos().getX(), origin.getY() + getMultiblock().getMasterPos().getY(), origin.getZ() + + getMultiblock().getMasterPos().getZ());
             BlockArrayEntry entr = getMultiblock().getStructure().getMap().get(origin);
             getWorld().setBlockState(pos, entr.getState().withRotation(getRotation()));
@@ -131,7 +131,7 @@ public interface IMultiblockMaster extends IMultiblockPart
      */
     default BlockPos getOriginalPos(BlockPos trans)
     {
-        return getMultiblock().getMasterPos().add(CarbideMC.transformPos(trans.subtract(getPos()), null, CarbideMC.getIdentityRotation(getRotation())));
+        return getMultiblock().getMasterPos().add(CoordUtils.transformPos(trans.subtract(getPos()), null, CoordUtils.getReverseRotation(getRotation())));
     }
 
     /**
@@ -139,7 +139,7 @@ public interface IMultiblockMaster extends IMultiblockPart
      */
     default BlockPos getZeroPos()
     {
-        return getPos().subtract(CarbideMC.transformPos(getMultiblock().getMasterPos(), null, getRotation()));
+        return getPos().subtract(CoordUtils.transformPos(getMultiblock().getMasterPos(), null, getRotation()));
     }
 
     /**

@@ -5,7 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
-import ru.pearx.carbide.mc.CarbideMC;
+import ru.pearx.carbide.mc.common.misc.CoordUtils;
 
 /*
  * Created by mrAppleXZ on 16.11.17 7:34.
@@ -31,6 +31,6 @@ public class AxisController
 
     public static IBlockState withRotation(IBlockState state, Rotation rot)
     {
-        return state.withProperty(AXIS, CarbideMC.rotateAxis(state.getValue(AXIS), rot));
+        return state.withProperty(AXIS, CoordUtils.rotateAxis(state.getValue(AXIS), rot));
     }
 }

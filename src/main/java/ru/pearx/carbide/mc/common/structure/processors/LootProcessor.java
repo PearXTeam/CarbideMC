@@ -15,6 +15,8 @@ import ru.pearx.carbide.mc.client.gui.controls.common.LegacyListView;
 import ru.pearx.carbide.mc.client.gui.controls.common.TextBox;
 import ru.pearx.carbide.Colors;
 import ru.pearx.carbide.mc.client.gui.structure.ControlStructureProcessor;
+import ru.pearx.carbide.mc.common.misc.CoordUtils;
+import ru.pearx.carbide.mc.common.misc.MiscUtils;
 
 import java.util.Random;
 
@@ -95,7 +97,7 @@ public class LootProcessor extends StructureProcessor
         @Override
         public Pair<ResourceLocation, StructureProcessorData> getData()
         {
-            return Pair.of(ID, new Data(CarbideMC.parseCoords(pos.getBuffer().toString()), new ResourceLocation(table.getBuffer().toString()), EnumFacing.VALUES[faces.getSelection() >= 0 ? faces.getSelection() : 0]));
+            return Pair.of(ID, new Data(CoordUtils.parseCoords(pos.getBuffer().toString()), new ResourceLocation(table.getBuffer().toString()), EnumFacing.VALUES[faces.getSelection() >= 0 ? faces.getSelection() : 0]));
         }
 
         @Override
@@ -137,7 +139,7 @@ public class LootProcessor extends StructureProcessor
     public void process(StructureProcessorData data, WorldServer world, Random rand)
     {
         Data d = (Data) data;
-        CarbideMC.fillBlockWithLoot(world, rand, d.getAbsolutePos(), d.facing, d.table, 0);
+        MiscUtils.fillBlockWithLoot(world, rand, d.getAbsolutePos(), d.facing, d.table, 0);
     }
 
     @Override

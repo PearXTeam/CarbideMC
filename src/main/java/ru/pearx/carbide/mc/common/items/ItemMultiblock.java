@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import ru.pearx.carbide.mc.CarbideMC;
 import ru.pearx.carbide.mc.client.ClientUtils;
+import ru.pearx.carbide.mc.common.misc.CoordUtils;
 import ru.pearx.carbide.mc.common.structure.multiblock.Multiblock;
 
 /*
@@ -64,7 +65,7 @@ public class ItemMultiblock extends ItemBase
             {
                 if(!worldIn.isRemote)
                 {
-                    mb.form(worldIn, pos.offset(facing), CarbideMC.getRotation(player.getHorizontalFacing()), player);
+                    mb.form(worldIn, pos.offset(facing), CoordUtils.rotationFromFacing(player.getHorizontalFacing()), player);
                 }
                 return EnumActionResult.SUCCESS;
             }

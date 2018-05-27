@@ -9,7 +9,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import ru.pearx.carbide.mc.CarbideMC;
+import ru.pearx.carbide.mc.common.misc.CoordUtils;
 import ru.pearx.carbide.mc.common.structure.blockarray.BlockArray;
 import ru.pearx.carbide.mc.common.structure.multiblock.IMultiblockMasterDefault;
 import ru.pearx.carbide.mc.common.structure.multiblock.Multiblock;
@@ -134,8 +134,8 @@ public class TileMultiblockMaster extends TileSyncableComposite implements IMult
     public void updateMultiblock()
     {
         BlockArray arr = getMultiblock().getStructure();
-        BlockPos from = CarbideMC.transformPos(new BlockPos(arr.getMinX(), arr.getMinY(), arr.getMinZ()).subtract(getMultiblock().getMasterPos()), null, getRotation()).add(getPos());
-        BlockPos to = CarbideMC.transformPos(new BlockPos(arr.getMaxX(), arr.getMaxY(), arr.getMaxZ()).subtract(getMultiblock().getMasterPos()), null, getRotation()).add(getPos());
+        BlockPos from = CoordUtils.transformPos(new BlockPos(arr.getMinX(), arr.getMinY(), arr.getMinZ()).subtract(getMultiblock().getMasterPos()), null, getRotation()).add(getPos());
+        BlockPos to = CoordUtils.transformPos(new BlockPos(arr.getMaxX(), arr.getMaxY(), arr.getMaxZ()).subtract(getMultiblock().getMasterPos()), null, getRotation()).add(getPos());
         int minX = Math.min(from.getX(), to.getX());
         int minY = Math.min(from.getY(), to.getY());
         int minZ = Math.min(from.getZ(), to.getZ());

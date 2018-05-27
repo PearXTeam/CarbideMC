@@ -6,8 +6,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import ru.pearx.carbide.mc.CarbideMC;
 import ru.pearx.carbide.collections.event.EventMap;
+import ru.pearx.carbide.mc.common.misc.CoordUtils;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -101,7 +101,7 @@ public class BlockArray
         for(Map.Entry<BlockPos, BlockArrayEntry> entr : getMap().entrySet())
         {
             relPos.setPos(entr.getKey().getX(), entr.getKey().getY(), entr.getKey().getZ());
-            relPos = CarbideMC.transformPos(relPos, null, rot);
+            relPos = CoordUtils.transformPos(relPos, null, rot);
             pos.setPos(relPos.getX() + zeroPos.getX(), relPos.getY() + zeroPos.getY(), relPos.getZ() + zeroPos.getZ());
             if(!checkEntry(entr.getValue(), w, pos, rot))
             {

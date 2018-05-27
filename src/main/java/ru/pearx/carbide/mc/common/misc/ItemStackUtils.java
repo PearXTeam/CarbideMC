@@ -1,4 +1,4 @@
-package ru.pearx.carbide.mc.common;
+package ru.pearx.carbide.mc.common.misc;
 
 import com.google.common.collect.Lists;
 import net.minecraft.client.util.RecipeItemHelper;
@@ -26,8 +26,10 @@ import java.util.List;
 /*
  * Created by mrAppleXZ on 10.07.17 22:04.
  */
-public class ItemStackUtils
+public final class ItemStackUtils
 {
+    private ItemStackUtils(){}
+
     public static ItemStack extractAll(IItemHandler hand, int slot)
     {
         ItemStack stack = hand.getStackInSlot(slot);
