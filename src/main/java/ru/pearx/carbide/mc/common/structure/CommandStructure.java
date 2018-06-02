@@ -43,7 +43,7 @@ public class CommandStructure extends CommandBase
         {
             switch (args[0])
             {
-                case "create":
+                case "get":
                 {
                     if(sender instanceof EntityPlayerMP)
                     {
@@ -91,7 +91,7 @@ public class CommandStructure extends CommandBase
     {
         if(args.length == 1)
         {
-            return Arrays.asList("create", "spawn");
+            return Arrays.asList("get", "spawn");
         }
         switch (args[0])
         {

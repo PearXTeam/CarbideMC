@@ -127,4 +127,10 @@ public class SetterProcessor implements IQuadProcessor
     {
         return true;
     }
+
+    @Override
+    public boolean isSingleUse()
+    {
+        return true;
+    }
 }

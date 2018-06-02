@@ -14,14 +14,24 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ClientUtils
 {
+    public static void setModelLocation(Item itm, int meta, String suffix, String variant)
+    {
+        ModelLoader.setCustomModelResourceLocation(itm, meta, new ModelResourceLocation(itm.getRegistryName() + suffix, variant));
+    }
+
     public static void setModelLocation(Item itm, int meta, String suffix)
     {
-        ModelLoader.setCustomModelResourceLocation(itm, meta, new ModelResourceLocation(itm.getRegistryName() + suffix, "normal"));
+        setModelLocation(itm, meta, suffix, "normal");
+    }
+
+    public static void setModelLocation(Item itm, int meta)
+    {
+        setModelLocation(itm, meta, "", "normal");
     }
 
     public static void setModelLocation(Item itm)
     {
-        setModelLocation(itm, 0, "");
+        setModelLocation(itm, 0, "", "normal");
     }
 
     public static ModelRotation rotationFromFace(EnumFacing face)

@@ -140,7 +140,7 @@ public enum StructureApi
             }
             catch (IOException e)
             {
-                CarbideMC.getLog().error("Can't create " + p.getParent() + " directory!", e);
+                CarbideMC.getLog().error("Can't get " + p.getParent() + " directory!", e);
             }
         try(OutputStream str = Files.newOutputStream(p))
         {

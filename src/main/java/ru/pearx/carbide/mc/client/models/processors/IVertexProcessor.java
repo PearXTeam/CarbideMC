@@ -33,4 +33,9 @@ public interface IVertexProcessor
     {
         return true;
     }
+
+    default boolean isSingleUse()
+    {
+        return false;
+    }
 }

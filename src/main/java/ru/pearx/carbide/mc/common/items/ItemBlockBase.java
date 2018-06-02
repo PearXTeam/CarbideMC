@@ -12,6 +12,8 @@ import ru.pearx.carbide.mc.client.models.IModelProvider;
  */
 public class ItemBlockBase extends ItemBlock implements IModelProvider
 {
+    private String defaultModelVariant = "normal";
+
     public ItemBlockBase(Block block)
     {
         super(block);
@@ -22,7 +24,17 @@ public class ItemBlockBase extends ItemBlock implements IModelProvider
     @SideOnly(Side.CLIENT)
     public void setupModels()
     {
-        ClientUtils.setModelLocation(this);
+        ClientUtils.setModelLocation(this, 0, "", getDefaultModelVariant());
+    }
+
+    public String getDefaultModelVariant()
+    {
+        return defaultModelVariant;
+    }
+
+    public void setDefaultModelVariant(String defaultModelVariant)
+    {
+        this.defaultModelVariant = defaultModelVariant;
     }
 
     //Don't remove this! It will break everything just 'cos Item#getMetadata returns zero by default!

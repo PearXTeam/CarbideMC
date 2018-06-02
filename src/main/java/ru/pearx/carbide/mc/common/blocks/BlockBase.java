@@ -14,20 +14,35 @@ import ru.pearx.carbide.mc.client.models.IModelProvider;
  */
 public class BlockBase extends Block implements IModelProvider
 {
+    private boolean emptyStateMapper;
+
     public BlockBase(Material materialIn)
     {
         super(materialIn);
+    }
+
+    protected boolean isEmptyStateMapper()
+    {
+        return emptyStateMapper;
+    }
+
+    protected void setEmptyStateMapper(boolean emptyStateMapper)
+    {
+        this.emptyStateMapper = emptyStateMapper;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void setupModels()
     {
-        StateMap.Builder bld = new StateMap.Builder();
-        for(IProperty prop : getBlockState().getProperties())
+        if(isEmptyStateMapper())
         {
-            bld.ignore(prop);
+            StateMap.Builder bld = new StateMap.Builder();
+            for (IProperty prop : getBlockState().getProperties())
+            {
+                bld.ignore(prop);
+            }
+            ModelLoader.setCustomStateMapper(this, bld.build());
         }
-        ModelLoader.setCustomStateMapper(this, bld.build());
     }
 }

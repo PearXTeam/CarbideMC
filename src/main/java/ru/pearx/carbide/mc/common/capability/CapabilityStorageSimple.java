@@ -1,4 +1,4 @@
-package ru.pearx.carbide.mc.common;
+package ru.pearx.carbide.mc.common.capability;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;

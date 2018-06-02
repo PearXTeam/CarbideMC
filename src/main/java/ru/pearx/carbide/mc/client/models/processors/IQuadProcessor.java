@@ -17,6 +17,13 @@ import java.util.List;
 public interface IQuadProcessor
 {
     void process(List<BakedQuad> quads, @Nullable IBlockState state, @Nullable EnumFacing side, long rand, IPXModel model);
+
     boolean processState();
+
     boolean processStack();
+
+    default boolean isSingleUse()
+    {
+        return false;
+    }
 }

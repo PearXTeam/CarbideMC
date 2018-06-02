@@ -51,16 +51,18 @@ public class OvModel extends PXModel
     private ResourceLocation baseModel;
     private IBakedModel baked;
 
+    private List<BakedQuad> cached;
+    private boolean isCached;
+
     private boolean flipV = true;
     private boolean disableSides = true;
 
     @Override
     public void bake()
     {
-        IModel mdl;
         try
         {
-            mdl = ModelLoaderRegistry.getModel(getBaseModel());
+            IModel mdl = ModelLoaderRegistry.getModel(getBaseModel());
             if (flipV)
             {
                 mdl = mdl.process(ImmutableMap.of("flip-v", "true"));
@@ -70,7 +72,7 @@ public class OvModel extends PXModel
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            CarbideMC.getLog().error("Can't bake a model \"" + getBaseModel().toString() + "\"!", e);
         }
     }
 
@@ -79,22 +81,18 @@ public class OvModel extends PXModel
     {
         if (shouldDisableSides() && side != null)
             return DUMMY_LIST;
-
-        List<BakedQuad> l = new ArrayList<>();
-        for(EnumFacing face : EnumFacing.values())
-            l.addAll(getBaked().getQuads(state, face, rand));
-        l.addAll(getBaked().getQuads(state, null, rand));
-        process(l, state, side, rand);
+        List<BakedQuad> l = getBaseQuads(state, side, rand);
+        process(false, true, l, state, side, rand);
         return l;
     }
 
-    protected void process(List<BakedQuad> quads, @Nullable IBlockState state, @Nullable EnumFacing side, long rand)
+    protected void process(boolean singleUseOnly, boolean filterSides, List<BakedQuad> quads, @Nullable IBlockState state, @Nullable EnumFacing side, long rand)
     {
         for (IQuadProcessor proc : quadProcessors)
-            if ((proc.processState() && state != null) || (proc.processStack() && state == null))
+            if (singleUseOnly == proc.isSingleUse() && ((proc.processState() && state != null) || (proc.processStack() && state == null)))
                 proc.process(quads, state, side, rand, this);
-        List<IVertexProcessor> validVertexProcs = vertexProcessors.parallelStream()
-                .filter(proc -> (proc.processState() && state != null) || (proc.processStack() && state == null))
+        List<IVertexProcessor> validVertexProcs = vertexProcessors.stream()
+                .filter(proc -> (!singleUseOnly && ((proc.processState() && state != null) || (proc.processStack() && state == null))) || (singleUseOnly && proc.isSingleUse()))
                 .collect(Collectors.toList());
         if (!validVertexProcs.isEmpty())
         {
@@ -161,7 +159,7 @@ public class OvModel extends PXModel
                     return bld.build();
                 }
                 return q;
-            }).filter((q) -> shouldDisableSides() || Objects.equals(side, q.getFace())).collect(Collectors.toList());
+            }).filter((q) -> !filterSides || shouldDisableSides() || Objects.equals(side, q.getFace())).collect(Collectors.toList());
             quads.clear();
             quads.addAll(processed);
         }
@@ -215,6 +213,21 @@ public class OvModel extends PXModel
     protected void setBaked(IBakedModel baked)
     {
         this.baked = baked;
+    }
+
+    protected List<BakedQuad> getBaseQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand)
+    {
+        if(!isCached)
+        {
+            List<BakedQuad> lst = new ArrayList<>();
+            for (EnumFacing face : EnumFacing.values())
+                lst.addAll(getBaked().getQuads(state, face, rand));
+            lst.addAll(getBaked().getQuads(state, null, rand));
+            process(true, false, lst, state, side, rand);
+            this.cached = lst;
+            this.isCached = true;
+        }
+        return cached;
     }
 
     public void setBaseModel(ResourceLocation loc)

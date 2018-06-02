@@ -51,7 +51,7 @@ public class GuiStructureCreation extends GuiOnScreen
     public TextBox toPos = new TextBox(new ResourceLocation(CarbideMC.MODID, "textures/gui/textbox.png"));
     public Button toPosLooking;
     public TextBox name = new TextBox(new ResourceLocation(CarbideMC.MODID, "textures/gui/textbox.png"));
-    public Button create = new Button(new ResourceLocation(CarbideMC.MODID, "textures/gui/button.png"), I18n.format("misc.gui.structure.create"), () ->
+    public Button create = new Button(new ResourceLocation(CarbideMC.MODID, "textures/gui/button.png"), I18n.format("misc.gui.structure.get"), () ->
     {
         BlockPos from = CoordUtils.parseCoords(fromPos.getBuffer().toString());
         BlockPos to = CoordUtils.parseCoords(toPos.getBuffer().toString());
